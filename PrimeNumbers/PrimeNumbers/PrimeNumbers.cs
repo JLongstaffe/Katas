@@ -41,10 +41,15 @@ namespace PrimeNumbers
 
                 yield return candidate;
 
-                for (var multiple = 1; candidate * multiple < m_Sieve.Length; multiple++)
-                {
-                    m_Sieve[candidate * multiple] = true;
-                }
+                UpdateSieve(candidate);
+            }
+        }
+
+        private void UpdateSieve(int prime)
+        {
+            for (var multiple = 1; prime * multiple < m_Sieve.Length; multiple++)
+            {
+                m_Sieve[prime * multiple] = true;
             }
         }
 
