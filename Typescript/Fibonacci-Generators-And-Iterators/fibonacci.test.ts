@@ -12,7 +12,8 @@ test("Rejects negative numbers", () =>
 
 test("Returns nth Fibonacci number", () =>
 {
-    [[1,  1],
+    [[0,  0],
+     [1,  1],
      [2,  1],
      [3,  2],
      [5,  5],
@@ -22,15 +23,16 @@ test("Returns nth Fibonacci number", () =>
 
 test("AsArray returns Fibonacci sequence", () =>
 {
-    const testCases: { [max: number]: number[]} =
-        { 1: [1],
-          2: [1, 1],
-          4: [1, 1, 2, 3],
-          6: [1, 1, 2, 3, 5, 8] };
+    const testCases: [number, number[]][] =
+        [ [0, []],
+          [1, [1]],
+          [2, [1, 1]],
+          [4, [1, 1, 2, 3]],
+          [6, [1, 1, 2, 3, 5, 8]] ];
 
-    for (let max in testCases)
+    for (let [max, expected] of testCases)
     {
-        expect(Fibonacci.AsArray(Number(max))).toEqual(testCases[max]);
+        expect(Fibonacci.AsArray(max)).toEqual(expected);
     }
 });
 
