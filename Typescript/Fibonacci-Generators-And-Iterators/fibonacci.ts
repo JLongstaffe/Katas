@@ -1,25 +1,19 @@
 
 export function Get(n: number): number
 {
-    if (n < 0) throw new RangeError("Input cannot be negative")
+    if (n < 0) throw new RangeError("Input cannot be negative");
 
-    var generator = Series(n);
+    let result = 0;
 
-    let value = 0;
-
-    let result =  generator.next();
-
-    while (!result.done)
+    for (let value of Series(n))
     {
-        value = result.value;
-
-        result = generator.next();
+        result = value;
     }
 
-    return value;
+    return result;
 }
 
-export function AsArray(n: number): Array<number>
+export function ToArray(n: number): Array<number>
 {
     if (n < 0) throw new RangeError("Input cannot be negative");
 

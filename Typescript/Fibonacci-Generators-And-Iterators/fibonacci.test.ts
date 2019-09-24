@@ -3,14 +3,14 @@ import { performance } from "perf_hooks";
 
 import * as Fibonacci from "./fibonacci";
 
-test("Rejects negative numbers", () =>
+test("Get rejects negative numbers", () =>
 {
     [-1, -2]
    .forEach(input => expect(() => Fibonacci.Get(input))
                     .toThrow(RangeError));
 });
 
-test("Returns nth Fibonacci number", () =>
+test("Get returns nth Fibonacci number", () =>
 {
     [[0,  0],
      [1,  1],
@@ -18,10 +18,18 @@ test("Returns nth Fibonacci number", () =>
      [3,  2],
      [5,  5],
      [20, 6765]]
-    .forEach(([input, expected]) => expect(Fibonacci.Get(input)).toBe(expected));
+    .forEach(([input, expected]) => expect(Fibonacci.Get(input))
+                                   .toBe(expected));
 });
 
-test("AsArray returns Fibonacci sequence", () =>
+test("ToArray rejects negative numbers", () =>
+{
+    [-1, -2]
+   .forEach(input => expect(() => Fibonacci.ToArray(input))
+                    .toThrow(RangeError));
+});
+
+test("ToArray returns Fibonacci sequence", () =>
 {
     const testCases: [number, number[]][] =
         [ [0, []],
@@ -32,7 +40,7 @@ test("AsArray returns Fibonacci sequence", () =>
 
     for (let [max, expected] of testCases)
     {
-        expect(Fibonacci.AsArray(max)).toEqual(expected);
+        expect(Fibonacci.ToArray(max)).toEqual(expected);
     }
 });
 
