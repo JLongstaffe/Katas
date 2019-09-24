@@ -34,6 +34,16 @@ namespace PrimeNumbers
             => new PrimeNumbers(1000).GetPrime(n);
 
         [Test]
+        public void Instance_can_be_reused()
+        {
+            var primenumbers = new PrimeNumbers(100);
+
+            Assert.That(() => primenumbers.GetPrime(4), Is.EqualTo(7));
+
+            Assert.That(() => primenumbers.GetPrime(5), Is.EqualTo(11));
+        }
+
+        [Test]
         public void Benchmark()
         {
             var primeNumbers = new PrimeNumbers(5_000_000);

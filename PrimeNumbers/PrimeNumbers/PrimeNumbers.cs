@@ -47,7 +47,7 @@ namespace PrimeNumbers
 
         private void UpdateSieve(int prime)
         {
-            for (var multiple = 1; prime * multiple < m_Sieve.Length; multiple++)
+            for (var multiple = 2; prime * multiple < m_Sieve.Length; multiple++)
             {
                 m_Sieve[prime * multiple] = true;
             }
