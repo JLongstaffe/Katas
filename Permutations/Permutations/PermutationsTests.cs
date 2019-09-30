@@ -9,6 +9,7 @@ namespace Permutations
     internal sealed class PermutationsTests
     {
         [TestCase("",     new [] { "" })]
+        [TestCase("a",    new [] { "a" })]
         [TestCase("ab",   new [] { "ab", "ba" })]
         [TestCase("abc",  new [] { "abc", "acb", "bac", "bca", "cab", "cba" })]
         [TestCase("abcd", new []
@@ -24,21 +25,28 @@ namespace Permutations
         }
 
         [Test]
+        public void Duplicates_are_ignored()
+        {
+            Assert.That(Permutations.Of("aab"),
+                        Is.EquivalentTo(new [] { "aab", "aba", "baa" }));
+        }
+
+        [Test]
         public void Benchmark()
         {
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
 
-            var result = Permutations.Of("01234567");
+            var result = Permutations.Of("0123456789");
 
             stopwatch.Stop();
 
-            Assert.That(result.Contains("01234567"));
+            Assert.That(result.Contains("9876543210"));
 
-            Assert.That(result.Count, Is.EqualTo(40_320)); // 8!
+            Assert.That(result.Count, Is.EqualTo(3_628_800)); // 10!
 
-            Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(10_000));
+            Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(5000));
         }
     }
 }
