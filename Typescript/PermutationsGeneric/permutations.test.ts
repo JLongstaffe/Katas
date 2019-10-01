@@ -16,6 +16,14 @@ test("Returns correct permutations", () =>
                               [1, 2, 0], [2, 0, 1], [2, 1, 0] ];
 
     expect(permutations).toEqual(expectedResults);
+
+    const mixedPermutations = getPermutations(["a", 1, null]);
+
+    const mixedExpectedResults = [ ["a", 1, null], ["a", null, 1],
+                                   [1, "a", null], [1, null, "a"],
+                                   [null, "a", 1], [null, 1, "a"] ];
+
+    expect(mixedPermutations).toEqual(mixedExpectedResults);
 });
 
 test("Benchmark", () =>
