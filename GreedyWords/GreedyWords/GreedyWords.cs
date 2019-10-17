@@ -37,13 +37,12 @@ namespace GreedyWords
 
             for (var i = input.Length - 1; i > 0; i--)
             {
-                if (m_Dictionary.Contains(input.Substring(0, i)))
-                {
-                    words.Push(input.Substring(0, i));
+                if (!m_Dictionary.Contains(input.Substring(0, i))) continue;
 
-                    foreach (var result in GetWords(input.Substring(i), words))
-                    yield return result;
-                }
+                words.Push(input.Substring(0, i));
+
+                foreach (var result in GetWords(input.Substring(i), words))
+                yield return result;
             }
 
             if (words.Count > 0) words.Pop();
