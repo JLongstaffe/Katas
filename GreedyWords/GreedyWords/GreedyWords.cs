@@ -29,11 +29,10 @@ namespace GreedyWords
         {
             if (m_Dictionary.Contains(input))
             {
-                words.Push(input);
-
-                yield return words.AsEnumerable().Reverse().ToArray();
-
-                words.Pop();
+                yield return words.AsEnumerable()
+                                  .Reverse()
+                                  .Append(input)
+                                  .ToArray();
             }
 
             for (var i = input.Length - 1; i > 0; i--)
@@ -43,9 +42,7 @@ namespace GreedyWords
                     words.Push(input.Substring(0, i));
 
                     foreach (var result in GetWords(input.Substring(i), words))
-                    {
-                        yield return result;
-                    }
+                    yield return result;
                 }
             }
 
