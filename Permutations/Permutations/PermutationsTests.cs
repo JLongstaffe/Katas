@@ -1,5 +1,6 @@
 ﻿
-using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 
 using NUnit.Framework;
 
@@ -30,22 +31,24 @@ namespace Permutations
                         Is.EquivalentTo(new [] { "aab", "aba", "baa" }));
         }
 
-        [Test]
+        [Test, Timeout(1000)]
         public void Benchmark()
         {
-            var stopwatch = new Stopwatch();
+            var result = Permutations.Of("012345678");
 
-            stopwatch.Start();
+            Assert.That(result.ToArray().Contains("876543210"));
 
-            var result = Permutations.Of("0123456789");
+            Assert.That(result.Count, Is.EqualTo(362_880)); // 9!
+        }
 
-            stopwatch.Stop();
+        [Test, Timeout(500)]
+        public void Benchmark_duplicates()
+        {
+            var result = Permutations.Of("aaaabbbbcccc");
 
-            Assert.That(result.Contains("9876543210"));
+            Assert.That(result.ToArray().Contains("ccccbbbbaaaa"));
 
-            Assert.That(result.Count, Is.EqualTo(3_628_800)); // 10!
-
-            Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(5000));
+            Assert.That(result.Count(), Is.EqualTo(34650)); // 12!/(4!)^3;
         }
     }
 }
