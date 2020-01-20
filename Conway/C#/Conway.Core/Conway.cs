@@ -16,14 +16,11 @@ namespace Conway.Core
                 throw new ArgumentNullException(nameof(initialState));
             }
 
-            var state = initialState;
+            bool[][] state;
 
-            while (true)
-            {
-                yield return state;
+            yield return state = initialState;
 
-                state = NextState(state);
-            }
+            while (true) yield return state = NextState(state);
         }
 
         private static bool[][] NextState(bool[][] state)
