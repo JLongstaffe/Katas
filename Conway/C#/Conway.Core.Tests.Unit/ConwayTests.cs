@@ -1,7 +1,7 @@
 
 using System;
+using System.Collections;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 using NUnit.Framework;
 
@@ -16,51 +16,66 @@ namespace Conway.Core.Tests.Unit
                         Throws.TypeOf<ArgumentNullException>());
         }
 
-        [TestCase(@"11
-                    00")]
-
-        [TestCase(@"11
-                    10")]
-        public void First_state_is_initial_state(string initialState)
+        private static IEnumerable First_state_test_cases()
         {
-            var cells = To2DBool(initialState);
+            yield return new [] { new [] { 1, 1 },
+                                  new [] { 0, 0 } };
 
-            Assert.That(Conway.States(cells).First(), Is.EqualTo(cells));
+            yield return new [] { new [] { 1, 1 },
+                                  new [] { 1, 0 } };
         }
 
-        [TestCase(@"00
-                    00",
-                  @"00
-                    00")]
-
-        [TestCase(@"11
-                    00",
-                  @"00
-                    00")]
-
-        [TestCase(@"11
-                    10",
-                  @"11
-                    11")]
-
-        [TestCase(@"11
-                    11",
-                  @"11
-                    11")]
-        public void Next_state_is_generated_correctly(string initialState,
-                                                      string nextState)
+        [TestCaseSource(nameof(First_state_test_cases))]
+        public void First_state_is_initial_state(int[][] initialState)
         {
-            Assert.That(Conway.States(To2DBool(initialState)).Skip(1).First(),
-                        Is.EqualTo(To2DBool(nextState)));
+            var state = ToBoolArray(initialState);
+
+            Assert.That(Conway.States(state).First(),
+                        Is.EqualTo(state));
+        }
+
+        private static IEnumerable Next_state_test_cases()
+        {
+            yield return new TestCaseData
+                (new [] { new [] { 0, 0 },
+                          new [] { 0, 0 } },
+                 new [] { new [] { 0, 0 },
+                          new [] { 0, 0 } });
+
+            yield return new TestCaseData
+                (new [] { new [] { 1, 1 },
+                          new [] { 0, 0 } },
+                 new [] { new [] { 0, 0 },
+                          new [] { 0, 0 } });
+
+            yield return new TestCaseData
+                (new [] { new [] { 1, 1 },
+                          new [] { 1, 0 } },
+                 new [] { new [] { 1, 1 },
+                          new [] { 1, 1 } });
+
+            yield return new TestCaseData
+                (new [] { new [] { 1, 1 },
+                          new [] { 1, 1 } },
+                 new [] { new [] { 1, 1 },
+                          new [] { 1, 1 } });
+        }
+
+        [TestCaseSource(nameof(Next_state_test_cases))]
+        public void Next_state_is_generated_correctly(int[][] initialState,
+                                                      int[][] nextState)
+        {
+            var state1 = ToBoolArray(initialState);
+
+            var state2 = ToBoolArray(nextState);
+
+            Assert.That(Conway.States(state1).Skip(1).First(),
+                        Is.EqualTo(state2));
         }
 
         [Test]
         public void Oscillating_blinker_example()
         {
-            static bool[][] ToBoolArray(int[][] intArray) =>
-                intArray.Select(row => row.Select(x => x == 1).ToArray())
-                        .ToArray();
-
             var horizontalState = ToBoolArray(new []
                 { new [] { 0, 0, 0 },
                   new [] { 1, 1, 1 },
@@ -79,14 +94,8 @@ namespace Conway.Core.Tests.Unit
                                             horizontalState }));
         }
 
-        private bool[][] To2DBool(string input)
-        {
-            var cells = Regex.Replace(input, @"\s+", "").ToCharArray();
-
-            static bool ToBool(char c) => c == '1';
-
-            return new [] { cells.Take(2).Select(ToBool).ToArray(),
-                            cells.Skip(2).Take(2).Select(ToBool).ToArray() };
-        }
+        static bool[][] ToBoolArray(int[][] intArray) =>
+                intArray.Select(row => row.Select(x => x == 1).ToArray())
+                        .ToArray();
     }
 }

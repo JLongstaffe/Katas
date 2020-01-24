@@ -44,7 +44,7 @@ namespace Conway.Core
         private static int CountNeighbours(bool[][] state, int x, int y)
         {
             bool InBounds(int x, int  y) => (y >= 0 && y < state.Length)
-                                         && (x >= 0 && x < state[0].Length);
+                                         && (x >= 0 && x < state[y].Length);
 
             bool IsAlive(int x, int y) => InBounds(x, y) && state[y][x];
 
