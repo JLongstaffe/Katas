@@ -41,16 +41,16 @@ namespace Conway.Core
                 || (!isAlive && neighbours == 3);
         }
 
-        private static int CountNeighbours(bool[][] state, int x, int y)
+        private static int CountNeighbours(bool[][] state, int column, int row)
         {
             bool InBounds(int x, int  y) => (y >= 0 && y < state.Length)
                                          && (x >= 0 && x < state[y].Length);
 
             bool IsAlive(int x, int y) => InBounds(x, y) && state[y][x];
 
-            return Range(x - 1, 3)
-                  .Cartesian(Range(y - 1, 3))
-                  .Where(p => p != (x, y))
+            return Range(column - 1, 3)
+                  .Cartesian(Range(row - 1, 3))
+                  .Where(p => p != (column, row))
                   .Count(p => IsAlive(p.x, p.y));
         }
 

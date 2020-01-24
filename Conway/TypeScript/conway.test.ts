@@ -80,5 +80,5 @@ test("Oscillating blinker example", () =>
 
 function To2DBoolean(input: number[][]): boolean[][]
 {
-    return input.map(x => x.map(y => y == 1));
+    return input.map(x => x.map(y => y === 1));
 }

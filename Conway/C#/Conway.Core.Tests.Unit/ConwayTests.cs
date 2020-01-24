@@ -94,8 +94,8 @@ namespace Conway.Core.Tests.Unit
                                             horizontalState }));
         }
 
-        static bool[][] ToBoolArray(int[][] intArray) =>
-                intArray.Select(row => row.Select(x => x == 1).ToArray())
-                        .ToArray();
+        private static bool[][] ToBoolArray(int[][] intArray) =>
+            intArray.Select(row => row.Select(x => x == 1).ToArray())
+                    .ToArray();
     }
 }

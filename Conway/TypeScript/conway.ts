@@ -22,19 +22,19 @@ function NextAlive(state: boolean[][], x: number, y: number): boolean
     const neighbours = CountNeighbours(state, x, y);
 
     return ( isAlive && [2, 3].includes(neighbours))
-        || (!isAlive && neighbours == 3);
+        || (!isAlive && neighbours === 3);
 }
 
-function CountNeighbours(state: boolean[][], x: number, y: number): number
+function CountNeighbours(state: boolean[][], column: number, row: number): number
 {
     const InBounds = (x: number, y: number) => y >= 0 && y < state.length
                                             && x >= 0 && x < state[y].length;
 
     const IsAlive = (x: number, y: number) => InBounds(x, y) && state[y][x];
 
-    return Cartesian([x - 1, x, x + 1],
-                     [y - 1, y, y + 1])
-          .filter(([px, py]) => px != x || py != y)
+    return Cartesian([column - 1, column, column + 1],
+                     [row - 1, row, row + 1])
+          .filter(([x, y]) => x !== column || y !== row)
           .filter(([x, y]) => IsAlive(x, y))
           .length;
 }
