@@ -5,25 +5,29 @@ using System.Linq;
 
 using static System.Linq.Enumerable;
 
+using ReadOnly2DBool = System.Collections.Generic.IReadOnlyList
+                        <System.Collections.Generic.IReadOnlyList<bool>>;
+
 namespace Conway.Core
 {
     public static class Conway
     {
-        public static IEnumerable<bool[][]> States(bool[][] initialState)
+        public static IEnumerable<ReadOnly2DBool> States
+            (ReadOnly2DBool initialState)
         {
             if (initialState is null)
             {
                 throw new ArgumentNullException(nameof(initialState));
             }
 
-            bool[][] state;
+            ReadOnly2DBool state;
 
             yield return state = initialState;
 
             while (true) yield return state = NextState(state);
         }
 
-        private static bool[][] NextState(bool[][] state)
+        private static ReadOnly2DBool NextState(ReadOnly2DBool state)
         {
             return state.Select
                 ((row, y) => row.Select
@@ -31,7 +35,7 @@ namespace Conway.Core
                 .To2DArray();
         }
 
-        private static bool NextAlive(bool[][] state, int x, int y)
+        private static bool NextAlive(ReadOnly2DBool state, int x, int y)
         {
             var isAlive = state[y][x];
 
@@ -41,10 +45,10 @@ namespace Conway.Core
                 || (!isAlive && neighbours == 3);
         }
 
-        private static int CountNeighbours(bool[][] state, int column, int row)
+        private static int CountNeighbours(ReadOnly2DBool state, int column, int row)
         {
-            bool InBounds(int x, int  y) => (y >= 0 && y < state.Length)
-                                         && (x >= 0 && x < state[y].Length);
+            bool InBounds(int x, int  y) => (y >= 0 && y < state.Count)
+                                         && (x >= 0 && x < state[y].Count);
 
             bool IsAlive(int x, int y) => InBounds(x, y) && state[y][x];
 
