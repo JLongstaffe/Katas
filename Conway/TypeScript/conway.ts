@@ -43,9 +43,9 @@ function CountNeighbours(state: Readonly2D<boolean>,
           .length;
 }
 
-function Cartesian<T>(a1: readonly T[], a2: readonly T[]): Readonly2D<T>
+function Cartesian<T>(a1: readonly T[], a2: readonly T[]): [T, T][]
 {
-    return a1.flatMap(x => a2.map(y => [x, y]));
+    return a1.flatMap(x => a2.map(y => [x, y] as [T, T]));
 }
 
 type Readonly2D<T> = ReadonlyArray<ReadonlyArray<T>>;
