@@ -1,5 +1,7 @@
 
-export function* States(initialState: boolean[][]): Generator<boolean[][]>
+export function* States(initialState: Readonly2D<boolean>)
+    :
+    Generator<Readonly2D<boolean>>
 {
     yield initialState;
 
@@ -8,14 +10,14 @@ export function* States(initialState: boolean[][]): Generator<boolean[][]>
     while (true) yield (state = NextState(state));
 }
 
-function NextState(state: boolean[][]): boolean[][]
+function NextState(state: Readonly2D<boolean>): Readonly2D<boolean>
 {
     return state.map
         ((row, y) => row.map
             ((column, x) => NextAlive(state, x, y)));
 }
 
-function NextAlive(state: boolean[][], x: number, y: number): boolean
+function NextAlive(state: Readonly2D<boolean>, x: number, y: number): boolean
 {
     const isAlive = state[y][x];
 
@@ -25,7 +27,9 @@ function NextAlive(state: boolean[][], x: number, y: number): boolean
         || (!isAlive && neighbours === 3);
 }
 
-function CountNeighbours(state: boolean[][], column: number, row: number): number
+function CountNeighbours(state: Readonly2D<boolean>,
+                         column: number,
+                         row: number): number
 {
     const InBounds = (x: number, y: number) => y >= 0 && y < state.length
                                             && x >= 0 && x < state[y].length;
@@ -43,3 +47,5 @@ function Cartesian<T>(a1: T[], a2: T[]): T[][]
 {
     return a1.flatMap(x => a2.map(y => [x, y]));
 }
+
+type Readonly2D<T> = ReadonlyArray<ReadonlyArray<T>>;
