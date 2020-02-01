@@ -23,7 +23,7 @@ const Grid: FunctionComponent<IGridProperties> = ({ grid }) =>
     return <table>{ rows }</table>;
 }
 
-const Cell = ({ alive }: ICellProperties) =>
+const Cell: FunctionComponent<ICellProperties> = ({ alive } ) =>
 {
     const cellStyle = { backgroundColor: (alive ? "grey" : "white") };
 
