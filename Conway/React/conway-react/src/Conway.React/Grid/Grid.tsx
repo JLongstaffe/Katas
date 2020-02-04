@@ -3,18 +3,6 @@ import React, { FunctionComponent, useState } from 'react';
 
 import './Grid.css';
 
-interface IGridProperties
-{
-    initialGrid: Readonly2D<boolean>;
-}
-
-interface ICellProperties
-{
-    isAlive: boolean;
-
-    setAlive: (alive: boolean) => void;
-}
-
 const Grid: FunctionComponent<IGridProperties> = ({ initialGrid }) =>
 {
     const [grid, setGrid] = useState(initialGrid);
@@ -48,8 +36,20 @@ function withCell(grid: Readonly2D<boolean>, cell: Cell): Readonly2D<boolean>
                         : grid[y][x]));
 }
 
-type Readonly2D<T> = ReadonlyArray<ReadonlyArray<T>>;
+interface IGridProperties
+{
+    initialGrid: Readonly2D<boolean>;
+}
+
+interface ICellProperties
+{
+    isAlive: boolean;
+
+    setAlive: (alive: boolean) => void;
+}
 
 type Cell = { x: number, y: number, isAlive: boolean };
+
+type Readonly2D<T> = ReadonlyArray<ReadonlyArray<T>>;
 
 export default Grid;
