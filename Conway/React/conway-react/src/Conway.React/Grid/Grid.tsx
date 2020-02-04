@@ -30,10 +30,11 @@ const Cell: FunctionComponent<ICellProperties> = ({ isAlive, setAlive } ) =>
 
 function withCell(grid: Readonly2D<boolean>, cell: Cell): Readonly2D<boolean>
 {
-    return grid.map((row, y) =>
-        row.map((_, x) => x === cell.x && y === cell.y
-                        ? cell.isAlive
-                        : grid[y][x]));
+    return grid.map
+        ((row, y) => row.map
+            ((_, x) => x === cell.x && y === cell.y
+                     ? cell.isAlive
+                     : grid[y][x]));
 }
 
 interface IGridProperties
