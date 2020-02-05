@@ -3,11 +3,22 @@ import React, { FunctionComponent, useState } from 'react';
 
 import Grid from '../Grid/Grid';
 
+import States from '../../Conway.Core/Conway';
+
 const GridContainer: FunctionComponent<{}> = () =>
 {
     const [grid, setGrid] = useState(initialGrid);
 
-    return <Grid grid={grid} setGrid={setGrid} />;
+    const conwayGenerator = States(grid);
+
+    conwayGenerator.next();
+
+    const onNext = () => setGrid(conwayGenerator.next().value);
+
+    return <>
+             <Grid grid={grid} setGrid={setGrid} />
+             <button onClick={onNext}>Next</button>
+           </>;
 }
 
 const initialGrid: ReadonlyArray<ReadonlyArray<boolean>> =

@@ -1,7 +1,7 @@
 
 import "core-js"; // for Array.flatMap polyfill
 
-import * as Conway from "./Conway";
+import States from "./Conway";
 
 test("First state is initial state", () =>
 {
@@ -14,7 +14,7 @@ test("First state is initial state", () =>
     {
         const state = To2DBoolean(initialState);
 
-        const nextState = Conway.States(state).next().value;
+        const nextState = States(state).next().value;
 
         expect(nextState).toEqual(state);
     })
@@ -49,7 +49,7 @@ test("Next state is generated correctly", () =>
 
         const state2 = To2DBoolean(expectedState);
 
-        const generator = Conway.States(state1);
+        const generator = States(state1);
 
         generator.next();
 
@@ -69,7 +69,7 @@ test("Oscillating blinker example", () =>
                                        [ 0, 1, 0 ],
                                        [ 0, 1, 0 ]]);
 
-    const states = Conway.States(horizontalState);
+    const states = States(horizontalState);
 
     expect(states.next().value).toEqual(horizontalState);
 

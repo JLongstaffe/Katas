@@ -1,5 +1,5 @@
 
-export function* States(initialState: Readonly2D<boolean>)
+function* States(initialState: Readonly2D<boolean>)
     :
     Generator<Readonly2D<boolean>>
 {
@@ -49,3 +49,5 @@ function Cartesian<T>(a1: readonly T[], a2: readonly T[]): [T, T][]
 }
 
 type Readonly2D<T> = ReadonlyArray<ReadonlyArray<T>>;
+
+export default States;
