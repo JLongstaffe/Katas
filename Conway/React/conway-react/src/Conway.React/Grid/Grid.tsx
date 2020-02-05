@@ -1,12 +1,10 @@
 
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import './Grid.css';
 
-const Grid: FunctionComponent<IGridProperties> = ({ initialGrid }) =>
+const Grid: FunctionComponent<IGridProperties> = ({ grid, setGrid }) =>
 {
-    const [grid, setGrid] = useState(initialGrid);
-
     const setCell = (cell: Cell) => setGrid(withCell(grid, cell));
 
     const rows = grid.map((row, y) =>
@@ -39,7 +37,9 @@ function withCell(grid: Readonly2D<boolean>, cell: Cell): Readonly2D<boolean>
 
 interface IGridProperties
 {
-    initialGrid: Readonly2D<boolean>;
+    grid: Readonly2D<boolean>;
+
+    setGrid: (grid: Readonly2D<boolean>) => void;
 }
 
 interface ICellProperties
