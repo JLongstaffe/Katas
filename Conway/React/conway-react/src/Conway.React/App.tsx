@@ -5,7 +5,7 @@ import './App.css';
 
 import GridContainer from './GridContainer/GridContainer';
 
-const [height, width] = [25, 25];
+const [height, width] = [20, 20];
 
 const initialGrid = randomInitialGrid(height, width);
 
