@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.deploySubpath": "build",
+    "appService.defaultWebAppToDeploy": "None"
+}
