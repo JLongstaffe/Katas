@@ -3,17 +3,17 @@ import React, { FunctionComponent, useState } from 'react';
 
 import Grid from '../Grid/Grid';
 
-import useToggleTimeout from '../useToggleTimeout';
+import useInterval from '../useInterval';
 
 import * as Conway from '../../Conway.Core/Conway';
 
-const GridContainer: FunctionComponent<IGridProperties> = ({ updateFrequency }) =>
+const GridContainer: FunctionComponent<IGridProperties> = ({ initialGrid, height, width, updateFrequency }) =>
 {
     const [grid, setGrid] = useState(initialGrid);
 
     const onNext = () => setGrid(Conway.NextState(grid));
 
-    const [playing, setPlaying] = useToggleTimeout(onNext, updateFrequency);
+    const [playing, setPlaying] = useInterval(onNext, updateFrequency);
 
     const togglePlay = () => setPlaying(!playing);
 
@@ -25,18 +25,17 @@ const GridContainer: FunctionComponent<IGridProperties> = ({ updateFrequency }) 
            </>;
 }
 
-const initialGrid: ReadonlyArray<ReadonlyArray<boolean>> =
-    [ [ false, false, false, true, false, false, false ],
-      [ false, false, false, true, false, false, false ],
-      [ false, false, false, true, false, false, false ],
-      [ false, false, false, true, false, false, false ],
-      [ false, false, false, true, false, false, false ],
-      [ false, false, false, true, false, false, false ],
-      [ false, false, false, true, false, false, false ] ];
-
 interface IGridProperties
 {
+    initialGrid: Readonly2D<boolean>;
+
+    height: number;
+
+    width: number;
+
     updateFrequency: number;
 }
+
+type Readonly2D<T> = ReadonlyArray<ReadonlyArray<T>>;
 
 export default GridContainer;

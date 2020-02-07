@@ -8,13 +8,14 @@ const Grid: FunctionComponent<IGridProperties> = ({ grid, setGrid }) =>
     const setCell = (cell: Cell) => setGrid(withCell(grid, cell));
 
     const rows = grid.map((row, y) =>
-        <tr>
+        <tr key={y}>
             { row.map((_, x) =>
-                <Cell isAlive={ grid[y][x] }
+                <Cell key={`${x}-${y}`}
+                      isAlive={ grid[y][x] }
                       setAlive={ (isAlive) => setCell({ x, y, isAlive }) } />) }
         </tr>)
 
-    return <table>{ rows }</table>;
+    return <table><tbody>{ rows }</tbody></table>;
 }
 
 const Cell: FunctionComponent<ICellProperties> = ({ isAlive, setAlive } ) =>
