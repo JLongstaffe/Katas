@@ -1,16 +1,5 @@
 
-function* States(initialState: Readonly2D<boolean>)
-    :
-    Generator<Readonly2D<boolean>>
-{
-    yield initialState;
-
-    let state = initialState;
-
-    while (true) yield (state = NextState(state));
-}
-
-function NextState(state: Readonly2D<boolean>): Readonly2D<boolean>
+export function NextState(state: Readonly2D<boolean>): Readonly2D<boolean>
 {
     return state.map
         ((row, y) => row.map
@@ -49,5 +38,3 @@ function Cartesian<T>(a1: readonly T[], a2: readonly T[]): [T, T][]
 }
 
 type Readonly2D<T> = ReadonlyArray<ReadonlyArray<T>>;
-
-export default States;

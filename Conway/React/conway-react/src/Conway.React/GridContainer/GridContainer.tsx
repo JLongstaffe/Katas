@@ -3,19 +3,17 @@ import React, { FunctionComponent, useState } from 'react';
 
 import Grid from '../Grid/Grid';
 
-import States from '../../Conway.Core/Conway';
+import useToggleTimeout from '../useToggleTimeout';
 
-const GridContainer: FunctionComponent<{}> = () =>
+import * as Conway from '../../Conway.Core/Conway';
+
+const GridContainer: FunctionComponent<IGridProperties> = ({ updateFrequency }) =>
 {
     const [grid, setGrid] = useState(initialGrid);
 
-    const [playing, setPlaying] = useState(false);
+    const onNext = () => setGrid(Conway.NextState(grid));
 
-    const conwayGenerator = States(grid);
-
-    conwayGenerator.next();
-
-    const onNext = () => setGrid(conwayGenerator.next().value);
+    const [playing, setPlaying] = useToggleTimeout(onNext, updateFrequency);
 
     const togglePlay = () => setPlaying(!playing);
 
@@ -35,5 +33,10 @@ const initialGrid: ReadonlyArray<ReadonlyArray<boolean>> =
       [ false, false, false, true, false, false, false ],
       [ false, false, false, true, false, false, false ],
       [ false, false, false, true, false, false, false ] ];
+
+interface IGridProperties
+{
+    updateFrequency: number;
+}
 
 export default GridContainer;

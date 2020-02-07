@@ -1,24 +1,7 @@
 
 import "core-js"; // for Array.flatMap polyfill
 
-import States from "./Conway";
-
-test("First state is initial state", () =>
-{
-    [[[1,1],
-      [0,0]],
-
-     [[1,1],
-      [1,0]]]
-    .forEach((initialState) =>
-    {
-        const state = To2DBoolean(initialState);
-
-        const nextState = States(state).next().value;
-
-        expect(nextState).toEqual(state);
-    })
-});
+import * as Conway from "./Conway";
 
 test("Next state is generated correctly", () =>
 {
@@ -49,11 +32,7 @@ test("Next state is generated correctly", () =>
 
         const state2 = To2DBoolean(expectedState);
 
-        const generator = States(state1);
-
-        generator.next();
-
-        const nextState = generator.next().value;
+        const nextState = Conway.NextState(state1);
 
         expect(nextState).toEqual(state2);
     })
@@ -69,13 +48,13 @@ test("Oscillating blinker example", () =>
                                        [ 0, 1, 0 ],
                                        [ 0, 1, 0 ]]);
 
-    const states = States(horizontalState);
+    let state = horizontalState as ReadonlyArray<ReadonlyArray<boolean>>;
 
-    expect(states.next().value).toEqual(horizontalState);
+    expect(state = Conway.NextState(state)).toEqual(verticalState);
 
-    expect(states.next().value).toEqual(verticalState);
+    expect(state = Conway.NextState(state)).toEqual(horizontalState);
 
-    expect(states.next().value).toEqual(horizontalState);
+    expect(state = Conway.NextState(state)).toEqual(verticalState);
 });
 
 function To2DBoolean(input: number[][]): boolean[][]
