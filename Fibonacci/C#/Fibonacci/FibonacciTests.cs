@@ -13,7 +13,7 @@ namespace Fibonacci
         public void Rejects_negative_numbers(int n)
         {
             Assert.That(() => Fibonacci.Get(n),
-                        Throws.InstanceOf<ArgumentNullException>());
+                        Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
         [TestCase(0, 0)]

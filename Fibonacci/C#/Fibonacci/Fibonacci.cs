@@ -9,7 +9,7 @@ namespace Fibonacci
     {
         public static long Get(int n)
         {
-            if (n < 0) throw new ArgumentNullException(nameof(n));
+            if (n < 0) throw new ArgumentOutOfRangeException(nameof(n));
 
             return Series().Skip(n).First();
         }
